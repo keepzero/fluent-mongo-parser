@@ -8,9 +8,13 @@ class LogDocGenerator:
         """docstring for __init__"""
         self.collection = log_source
 
-    def get_log_docs(self):
+    def get_log_docs(self, condition={}):
         """docstring for get_log_docs"""
-        return self.collection.find()
+        if not condition:
+            return self.collection.find()
+        else:
+            return self.collection.find(condition)
+
 
 def main():
     plugin_manager = PluginManager()
@@ -20,7 +24,7 @@ def main():
     ms = MongoSource()
     collection = ms.get_collection("net-test", "ename_access")
     log_generator = LogDocGenerator("", collection)
-    for log_doc in log_generator.get_log_docs():
+    for log_doc in log_generator.get_log_docs({"host":"192.168.1.57"}):
         plugin_manager.call_method('process', args=log_doc, keywords=keywords)
     plugin_manager.call_method('report', args={}, keywords=keywords)
 
