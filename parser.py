@@ -4,7 +4,7 @@ from manager import PluginManager
 from config import MongoSource
 
 class LogDocGenerator:
-    def __init__(self, log_format, log_source):
+    def __init__(self, log_source):
         """docstring for __init__"""
         self.collection = log_source
 
@@ -19,12 +19,17 @@ class LogDocGenerator:
 def main():
     plugin_manager = PluginManager()
 
-    keywords = ['counter']
+    #keywords = ['counter', 'ip']
+    #keywords = ['counter']
+    keywords = ['ip']
 
     ms = MongoSource()
     collection = ms.get_collection("net-test", "ename_access")
-    log_generator = LogDocGenerator("", collection)
-    for log_doc in log_generator.get_log_docs({"host":"192.168.1.57"}):
+    log_generator = LogDocGenerator(collection)
+
+    #condition = {"host":"192.168.1.57"}
+    condition = {}
+    for log_doc in log_generator.get_log_docs(condition):
         plugin_manager.call_method('process', args=log_doc, keywords=keywords)
     plugin_manager.call_method('report', args={}, keywords=keywords)
 
