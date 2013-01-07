@@ -9,6 +9,10 @@ CONFIG = {
     'pswd':  'mongo',
 }
 
+def get_connection():
+    """Simple method to get mongo connection"""
+    return MongoClient(CONFIG['host'], CONFIG['port'])
+
 class MongoSource:
     def __init__(self, host=None, port=27017, user="mongo", pswd="mongo"):
         if host:

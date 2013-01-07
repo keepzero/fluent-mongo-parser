@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from config import MongoSource
 from manager import PluginManager
 from log import LogDocGenerator
+import config
 import datetime
 
 def main():
@@ -11,17 +11,16 @@ def main():
     plugin_manager = PluginManager()
 
     # 2. get one or more mongodb collection 
-    ms = MongoSource()
-    collection = ms.get_collection("net-test", "ename_access")
+    conn = config.get_connection()
+    collection = conn["com-test"]["www_ename_com_access"]
 
     # 3. make a log_generator
     log_generator = LogDocGenerator(collection)
 
     # 4. use condition to get filtered logs
-    #condition = {"host":"192.168.1.57"}
-    now = datetime.datetime.now()
-    start = now - datetime.timedelta(hours=8, minutes=10)
-    end = now - datetime.timedelta(hours=8)
+    now = datetime.datetime.utcnow()
+    start = now - datetime.timedelta(days=2, minutes=30)
+    end = now
     condition = {"time":{"$gte":start, "$lt":end}}
 
     # 5. use keywords plugins to parse logs
