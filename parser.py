@@ -3,6 +3,7 @@
 from config import MongoSource
 from manager import PluginManager
 from log import LogDocGenerator
+import datetime
 
 def main():
 
@@ -18,7 +19,10 @@ def main():
 
     # 4. use condition to get filtered logs
     #condition = {"host":"192.168.1.57"}
-    condition = {}
+    now = datetime.datetime.now()
+    start = now - datetime.timedelta(hours=8, minutes=10)
+    end = now - datetime.timedelta(hours=8)
+    condition = {"time":{"$gte":start, "$lt":end}}
 
     # 5. use keywords plugins to parse logs
     keywords = ['ip']
