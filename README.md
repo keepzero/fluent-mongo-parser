@@ -4,10 +4,16 @@ fluent mongo parser
 A simple python application that allows you to write custom plugins to exctract the 
 statistical data from mongodb which stores log data from fluent.
 
+TODO
+====
+
+1. mv log.py and manager.py to a libs dir.
+2. Add support for more collection parser in once running.
+
 Usage
 =====
 
-TODO
+Edit config.py then run `python parser.py`
 
 THANKS
 ======
