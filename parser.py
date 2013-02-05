@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
+import datetime
+
 from manager import PluginManager
 from log import LogDocGenerator
 import config
-import datetime
 
 # 1. load all plugins
 plugin_manager = PluginManager()

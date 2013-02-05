@@ -8,7 +8,6 @@ TODO
 ====
 
 1. mv log.py and manager.py to a libs dir.
-2. Add support for more collection parser in once running.
 
 Usage
 =====

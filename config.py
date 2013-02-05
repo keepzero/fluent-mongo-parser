@@ -3,7 +3,7 @@
 from pymongo import MongoClient
 
 CONFIG = {
-    'host':  '192.168.10.202',
+    'host':  'localhost',
     'port':  27017,
     'user':  'root',
     'pswd':  'password',
