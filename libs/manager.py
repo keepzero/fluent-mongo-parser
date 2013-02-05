@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
 import sys
 import os
@@ -39,5 +40,5 @@ class PluginManager:
                 try:
                     getattr(plugin, method)(**args)
                 except:
-                    pass
+                    raise
 

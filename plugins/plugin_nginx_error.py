@@ -12,20 +12,25 @@ class NginxError(Plugin):
     def __init__(self, **kwargs):
         self.keywords = ['nginx', 'error']
         self.total_line = 0
-        self.level_dict = {"error": 0, "notice": 0, "info": 0}
+        self.level_dict = {"error": 0, "notice": 0, "info": 0, "alert": 0}
         self.client_dict = {}
 
     def process(self, **kwargs):
         """docstring for process"""
         #self.total_line += 1
-        self.level_dict[kwargs['level']] += 1
-        message = kwargs['message']
-        m = re.match(".*client: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", message)
-        if m:
-            if m.group(1) in self.client_dict:
-                self.client_dict[m.group(1)] += 1
-            else:
-                self.client_dict[m.group(1)] = 1
+        try:
+            self.level_dict[kwargs['level']] += 1
+            message = kwargs['message']
+            m = re.match(".*client: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*", message)
+            if m:
+                if m.group(1) in self.client_dict:
+                    self.client_dict[m.group(1)] += 1
+                else:
+                    self.client_dict[m.group(1)] = 1
+        except KeyError:
+            pass
+        except:
+            raise
 
     def report(self, **kwargs):
         """docstring for report"""
