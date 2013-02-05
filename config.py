@@ -1,12 +1,20 @@
 #!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
 from pymongo import MongoClient
 
-CONFIG = {
-    'host':  'localhost',
-    'port':  27017,
-    'user':  'root',
-    'pswd':  'password',
+MONGO_CONFIG = {
+    'host': 'localhost',
+    'port': 27017,
+    'user': 'root',
+    'pswd': 'password',
+}
+
+EMAIL_CONFIG = {
+    'host': "smtp.example.com",
+    'user': "user@example.com",
+    'pswd': "password",
+    'pfix': "example.com"
 }
 
 def get_connection():
@@ -14,10 +22,10 @@ def get_connection():
     Simple method to get mongo connection.
        You may need to auth with mongo.
     """
-    return MongoClient(CONFIG['host'], CONFIG['port'])
+    return MongoClient(MONGO_CONFIG['host'], MONGO_CONFIG['port'])
 
 class MongoSource:
-    def __init__(self, host="127.0.0.1", port=27017, user="mongo", pswd="mongo"):
+    def __init__(self, host="127.0.0.1", port=27017, user="", pswd=""):
         self.connection = MongoClient(host, port)
         self.connection["admin"].authenticate(user, pswd)
 
