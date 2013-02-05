@@ -2,8 +2,8 @@
 
 import datetime
 
-from manager import PluginManager
-from log import LogDocGenerator
+from libs.manager import PluginManager
+from libs.log import LogDocGenerator
 import config
 
 # 1. load all plugins

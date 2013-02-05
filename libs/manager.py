@@ -13,7 +13,7 @@ class PluginManager:
         if path:
             self.plugin_dir = path
         else:
-            self.plugin_dir = os.path.dirname(__file__) + '/plugins/'
+            self.plugin_dir = os.path.dirname(__file__) + '/../plugins/'
         self.plugins = {}
         self._load_plugins()
         self._register_plugins(**plugin_init_args)

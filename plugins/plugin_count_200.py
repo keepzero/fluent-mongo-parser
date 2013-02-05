@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-from manager import Plugin
+import sys
+sys.path.insert(0, "..")
+
+from libs.manager import Plugin
 
 class CountHTTP200(Plugin):
 
