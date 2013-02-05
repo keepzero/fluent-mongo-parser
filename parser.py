@@ -5,31 +5,38 @@ from log import LogDocGenerator
 import config
 import datetime
 
-def main():
+# 1. load all plugins
+plugin_manager = PluginManager()
 
-    # 1. load all plugins
-    plugin_manager = PluginManager()
+def parse(collection, condition, keywords):
+    """docstring for parser"""
+    log_generator = LogDocGenerator(collection)
+    for log_doc in log_generator.get_log_docs(condition):
+        plugin_manager.call_method('process', args = log_doc, keywords = keywords)
+
+def report(keywords):
+    """docstring for report"""
+    plugin_manager.call_method('report', args={}, keywords=keywords)
+
+def main():
 
     # 2. get one or more mongodb collection 
     conn = config.get_connection()
     collection = conn["com-test"]["www_ename_com_access"]
 
-    # 3. make a log_generator
-    log_generator = LogDocGenerator(collection)
-
-    # 4. use condition to get filtered logs
+    # 3. make condition to get filtered logs
     now = datetime.datetime.utcnow()
-    start = now - datetime.timedelta(days=2, minutes=30)
+    start = now - datetime.timedelta(days=0, hours=2, minutes=30)
     end = now
     condition = {"time":{"$gte":start, "$lt":end}}
 
-    # 5. use keywords plugins to parse logs
-    keywords = ['ip']
-    for log_doc in log_generator.get_log_docs(condition):
-        plugin_manager.call_method('process', args=log_doc, keywords=keywords)
+    # 4. define keywords plugins to parse logs
+    keywords = ['nginx']
 
-    # 6. give a report
-    plugin_manager.call_method('report', args={}, keywords=keywords)
+    # 5. parse and report
+    parse(collection, condition, keywords)
+    report(keywords)
+
 
 if __name__ == '__main__':
     main()
