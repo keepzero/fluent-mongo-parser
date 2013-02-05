@@ -20,21 +20,25 @@ def report(keywords):
 
 def main():
 
-    # 2. get one or more mongodb collection 
+    # 2. mongodb authenticate
     conn = config.get_connection()
-    collection = conn["com-test"]["www_ename_com_access"]
+    db = conn["admin"]
+    db.authenticate("root","password")
 
     # 3. make condition to get filtered logs
     now = datetime.datetime.utcnow()
     start = now - datetime.timedelta(days=0, hours=2, minutes=30)
-    end = now
-    condition = {"time":{"$gte":start, "$lt":end}}
+    condition = {"time":{"$gte":start}}
 
     # 4. define keywords plugins to parse logs
     keywords = ['nginx']
 
-    # 5. parse and report
-    parse(collection, condition, keywords)
+    # 5. parse collections and report
+    collections = []
+    collections.append(conn["host1"]["nginx_error"])
+    collections.append(conn["host2"]["nginx_error"])
+    for coll in collections:
+        parse(coll, condition, keywords)
     report(keywords)
 
 
