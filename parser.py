@@ -4,7 +4,7 @@
 import datetime
 
 from libs.manager import PluginManager
-from libs.log import LogDocGenerator
+#from libs.mail import send_mail
 import config
 
 # 1. load all plugins
@@ -12,8 +12,7 @@ plugin_manager = PluginManager()
 
 def parse(collection, condition, keywords):
     """docstring for parser"""
-    log_generator = LogDocGenerator(collection)
-    for log_doc in log_generator.get_log_docs(condition):
+    for log_doc in collection.find(condition):
         plugin_manager.call_method('process', args = log_doc, keywords = keywords)
 
 def report(keywords):
@@ -25,10 +24,9 @@ def main():
 
     # 2. mongodb authenticate
     conn = config.get_connection()
-
-    # 2'. authenticate
-    db = conn["admin"]
-    db.authenticate(config.MONGO_CONFIG['user'], config.MONGO_CONFIG['pswd'])
+    # authenticate
+    #db = conn["admin"]
+    #db.authenticate(config.MONGO_CONFIG['user'], config.MONGO_CONFIG['pswd'])
 
     # 3. make condition to get filtered logs
     now = datetime.datetime.utcnow()
