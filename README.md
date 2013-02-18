@@ -7,7 +7,8 @@ statistical data from mongodb which stores log data from fluent.
 TODO
 ====
 
-1. mv log.py and manager.py to a libs dir.
+1. email notify
+2. more conditions to get log from mongodb
 
 Usage
 =====

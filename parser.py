@@ -18,14 +18,17 @@ def parse(collection, condition, keywords):
 
 def report(keywords):
     """docstring for report"""
+    # TODO email and print
     plugin_manager.call_method('report', args={}, keywords=keywords)
 
 def main():
 
     # 2. mongodb authenticate
     conn = config.get_connection()
+
+    # 2'. authenticate
     db = conn["admin"]
-    db.authenticate("root","password")
+    db.authenticate(config.MONGO_CONFIG['user'], config.MONGO_CONFIG['pswd'])
 
     # 3. make condition to get filtered logs
     now = datetime.datetime.utcnow()
