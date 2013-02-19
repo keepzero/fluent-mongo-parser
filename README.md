@@ -7,8 +7,10 @@ statistical data from mongodb which stores log data from fluent.
 TODO
 ====
 
-1. email notify
-2. more conditions to get log from mongodb
+1. set collection or db as args for plugin_manager.call_method
+2. let mongodb do more query and analyse other than use python
+3. email notify
+
 
 Usage
 =====

@@ -12,13 +12,12 @@ plugin_manager = PluginManager()
 
 def parse(collection, condition, keywords):
     """docstring for parser"""
-    for log_doc in collection.find(condition):
-        plugin_manager.call_method('process', args = log_doc, keywords = keywords)
+    plugin_manager.call_method('process', keywords, collection = collection, condition = condition)
 
 def report(keywords):
     """docstring for report"""
     # TODO email and print
-    plugin_manager.call_method('report', args={}, keywords=keywords)
+    plugin_manager.call_method('report', keywords=keywords)
 
 def main():
 
@@ -34,12 +33,12 @@ def main():
     condition = {"time":{"$gte":start}}
 
     # 4. define keywords plugins to parse logs
-    keywords = ['nginx']
+    keywords = ['new']
 
     # 5. parse collections and report
     collections = []
-    collections.append(conn["host1"]["nginx_error"])
-    collections.append(conn["host2"]["nginx_error"])
+    collections.append(conn["host1"]["nginx_access"])
+    collections.append(conn["host2"]["nginx_access"])
     for coll in collections:
         parse(coll, condition, keywords)
     report(keywords)

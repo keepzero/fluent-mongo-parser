@@ -34,7 +34,7 @@ class PluginManager:
             else:
                 self.plugins[obj] = []
 
-    def call_method(self, method, args={}, keywords=[]):
+    def call_method(self, method, keywords=[], **args):
         for plugin in self.plugins:
             if not keywords or (set(keywords) & set(self.plugins[plugin])):
                 try:
