@@ -9,7 +9,7 @@ from libs.manager import Plugin
 class CountIPNew(Plugin):
 
     def __init__(self, **kwargs):
-        self.keywords = ['counter', 'ip', 'new']
+        self.keywords = ['counter', 'ip']
         self.total_ip = 0
         self.ip_dict = {}
 
