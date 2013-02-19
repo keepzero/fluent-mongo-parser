@@ -10,14 +10,18 @@ import config
 # 1. load all plugins
 plugin_manager = PluginManager()
 
-def parse(collection, condition, keywords):
+def parse(collections, condition, keywords):
     """docstring for parser"""
-    plugin_manager.call_method('process', keywords, collection = collection, condition = condition)
+    if isinstance(collections, list):
+        for c in collections:
+            plugin_manager.call_method('process', keywords, collection = c, condition = condition)
+    else:
+        plugin_manager.call_method('process', keywords, collection = collections, condition = condition)
 
 def report(keywords):
     """docstring for report"""
     # TODO email and print
-    plugin_manager.call_method('report', keywords=keywords)
+    plugin_manager.call_method('report', keywords)
 
 def main():
 
@@ -39,8 +43,7 @@ def main():
     collections = []
     collections.append(conn["host1"]["nginx_access"])
     collections.append(conn["host2"]["nginx_access"])
-    for coll in collections:
-        parse(coll, condition, keywords)
+    parse(collections, condition, keywords)
     report(keywords)
 
 
