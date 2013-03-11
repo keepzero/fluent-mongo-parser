@@ -3,10 +3,20 @@
 
 import sys
 import os
+import datetime
 
 
 class Plugin(object):
-    pass
+    def __init__(self, **kwargs):
+        self.result = []
+
+    def save(self, to, result, **kwargs):
+        """docstring for save"""
+        info = kwargs
+        now = datetime.datetime.utcnow()
+        record = dict(result, time = now, **info)
+        self.result.append(record)
+        to.insert(record)
 
 
 class PluginManager:
